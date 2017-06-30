@@ -90,13 +90,13 @@ tar -xf ${PHP_SRC_TARXZ} --strip-components=1 -C ${TEMP_DIR} && \
 --with-pear && \
 make && \
 make install && \
+pushd ${INSTALL_DIR} && \
+PATH=${INSTALL_DIR}/bin:${PATH} pear upgrade-all && \
+popd && \
 fix-ownership ${INSTALL_DIR} && \
 fix-permissions ${INSTALL_DIR} && \
 yum remove -y ${PHP_COMPILE_DEPENDENCIES} && \
 yum clean all && \
-popd && \
-pushd ${INSTALL_DIR} && \
-PATH=${PATH}:${INSTALL_DIR}/bin pear upgrade-all && \
 popd && \
 rm -rf ${TEMP_DIR_ROOT}
 
